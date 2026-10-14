@@ -1,0 +1,2423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KHA Tools | أدوات مجانية للجميع</title>
+
+    <meta name="description"
+        content="KHA Tools موقع مجاني يقدم أدوات مفيدة للدراسة والحياة اليومية، مثل حاسبة المعدل وتحويل الوحدات وعد الكلمات.">
+
+    <meta name="keywords"
+        content="KHA Tools, حاسبة المعدل, تحويل الوحدات, عداد الكلمات, أدوات مجانية">
+
+    <meta name="author" content="KHA YT">
+    <meta name="theme-color" content="#0b1120">
+
+    <style>
+        /* =========================
+           1. الإعدادات العامة
+        ========================= */
+
+        :root {
+            --background: #0b1120;
+            --surface: #111a2e;
+            --surface-light: #18243b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text: #f1f5f9;
+            --muted: #a7b4c9;
+            --border: #293750;
+            --success: #34d399;
+            --danger: #fb7185;
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1100px, 92%);
+            margin-inline: auto;
+        }
+
+        .section {
+            padding: 75px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(25px, 4vw, 36px);
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+        }
+
+        .accent {
+            color: #60a5fa;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================
+           2. رأس الموقع
+        ========================= */
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 17, 32, 0.95);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .header-content {
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        .main-nav a {
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .main-nav a:hover {
+            color: #60a5fa;
+        }
+
+        .header-button {
+            background: var(--primary);
+            color: white;
+            border-radius: 10px;
+            padding: 9px 15px;
+            white-space: nowrap;
+        }
+
+        .header-button:hover {
+            background: var(--primary-hover);
+        }
+
+        /* =========================
+           3. الواجهة الرئيسية
+        ========================= */
+
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            background:
+                radial-gradient(
+                    ellipse at top,
+                    rgba(59, 130, 246, 0.18),
+                    transparent 65%
+                );
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 6px 14px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.08);
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            max-width: 850px;
+            margin: 0 auto 20px;
+            font-size: clamp(32px, 6vw, 55px);
+            line-height: 1.35;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 22px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .button-primary {
+            color: white;
+            background: var(--primary);
+        }
+
+        .button-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .button-secondary {
+            color: var(--text);
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--primary);
+        }
+
+        /* =========================
+           4. معلومات الموقع
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 55px;
+        }
+
+        .stat-card {
+            padding: 20px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .stat-card strong {
+            display: block;
+            font-size: 23px;
+            color: #60a5fa;
+        }
+
+        .stat-card span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           5. البحث والتصنيفات
+        ========================= */
+
+        .tools-section {
+            background: #0d1526;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 18px;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+        }
+
+        .category-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-button {
+            padding: 8px 16px;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+        }
+
+        .category-button.active,
+        .category-button:hover {
+            color: white;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* =========================
+           6. بطاقات الأدوات
+        ========================= */
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            padding: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+
+        .tool-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            margin-bottom: 15px;
+            border-radius: 14px;
+            background: rgba(59, 130, 246, 0.13);
+            font-size: 28px;
+        }
+
+        .tool-card h3 {
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .tool-card p {
+            min-height: 55px;
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .tool-button {
+            display: inline-block;
+            padding: 8px 15px;
+            color: white;
+            background: var(--primary);
+            border-radius: 9px;
+            border: 0;
+        }
+
+        .tool-button:hover {
+            background: var(--primary-hover);
+        }
+
+        .empty-search {
+            grid-column: 1 / -1;
+            padding: 25px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        /* =========================
+           7. مساحة تشغيل الأدوات
+        ========================= */
+
+        .working-area {
+            max-width: 850px;
+            margin: 35px auto 0;
+        }
+
+        .tool-panel {
+            padding: 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .tool-panel h3 {
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .tool-description {
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 12px 14px;
+            color: var(--text);
+            background: #0b1120;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        .form-control::placeholder {
+            color: #8190a8;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 16px;
+            background: #0b1120;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .result strong {
+            color: var(--success);
+        }
+
+        .result.error {
+            color: #fecdd3;
+            border-color: #9f1239;
+        }
+
+        .result.error strong {
+            color: var(--danger);
+        }
+
+        .grade-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 12px;
+            align-items: end;
+        }
+
+        .remove-grade {
+            padding: 10px 13px;
+            color: white;
+            background: #9f1239;
+            border: 0;
+            border-radius: 8px;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* =========================
+           8. مميزات الموقع
+        ========================= */
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            padding: 25px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .feature-card .feature-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================
+           9. حول الموقع
+        ========================= */
+
+        .about-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 35px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .about-box p {
+            color: var(--muted);
+            margin-top: 12px;
+        }
+
+        /* =========================
+           10. الأسئلة الشائعة
+        ========================= */
+
+        .faq-list {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .faq-item {
+            margin-bottom: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-item summary {
+            padding: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .faq-item p {
+            padding: 0 18px 18px;
+            color: var(--muted);
+        }
+
+        /* =========================
+           11. التواصل
+        ========================= */
+
+        .contact-box {
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .contact-box p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        /* =========================
+           12. التذييل
+        ========================= */
+
+        .site-footer {
+            padding: 35px 0;
+            background: #080d18;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-content p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #60a5fa;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            border: 0;
+            border-radius: 50%;
+            color: white;
+            background: var(--primary);
+            font-size: 20px;
+            box-shadow: 0 5px 20px #0005;
+        }
+
+        /* =========================
+           13. الهواتف والشاشات الصغيرة
+        ========================= */
+
+        @media (max-width: 800px) {
+            .tools-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .header-content {
+                padding: 12px 0;
+                flex-wrap: wrap;
+            }
+
+            .main-nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .tools-container,
+            .features-grid,
+            .stats,
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 55px 0;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .tool-panel,
+            .contact-box,
+            .about-box {
+                padding: 20px;
+            }
+
+            .grade-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grade-row .remove-grade {
+                grid-column: 1 / -1;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         رأس الموقع
+    ========================== -->
+
+    <header class="site-header">
+        <div class="container header-content">
+
+            <a href="#home" class="logo" aria-label="KHA Tools الرئيسية">
+                KHA <span>Tools</span>
+            </a>
+
+            <nav class="main-nav" aria-label="القائمة الرئيسية">
+                <a href="#home">الرئيسية</a>
+                <a href="#tools">الأدوات</a>
+                <a href="#features">المميزات</a>
+                <a href="#about">حول الموقع</a>
+                <a href="#faq">الأسئلة الشائعة</a>
+            </nav>
+
+            <a href="#tools" class="header-button">
+                جرب الأدوات
+            </a>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             الواجهة الرئيسية
+        ========================== -->
+
+        <section class="hero" id="home">
+            <div class="container">
+
+                <span class="hero-label">
+                    ✨ أدوات مجانية وسهلة الاستعمال
+                </span>
+
+                <h1>
+                    مرحباً بك في
+                    <span class="accent">KHA Tools</span>
+                </h1>
+
+                <p>
+                    اكتشف مجموعة من الأدوات البسيطة التي تساعدك في الدراسة
+                    والعمل والحياة اليومية، بدون تعقيد وبدون الحاجة إلى تثبيت
+                    برامج إضافية.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#tools" class="button button-primary">
+                        اكتشف الأدوات ←
+                    </a>
+
+                    <a href="#about" class="button button-secondary">
+                        تعرف على الموقع
+                    </a>
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <strong>مجانية</strong>
+                        <span>الأدوات المتوفرة</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <strong>سهلة</strong>
+                        <span>واجهة بسيطة</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <strong>مباشرة</strong>
+                        <span>بدون تثبيت برنامج</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========================
+             قسم الأدوات
+        ========================== -->
+
+        <section class="section tools-section" id="tools">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>أدوات <span class="accent">KHA Tools</span></h2>
+                    <p>
+                        اختار الأداة اللي محتاج واستعملها مباشرة.
+                    </p>
+                </div>
+
+                <div class="search-box">
+                    <label for="toolSearch" class="hidden">
+                        ابحث عن أداة
+                    </label>
+
+                    <input
+                        type="search"
+                        id="toolSearch"
+                        placeholder="🔎 قلب على أداة، مثلاً: المعدل..."
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="category-list" aria-label="تصنيفات الأدوات">
+
+                    <button
+                        type="button"
+                        class="category-button active"
+                        data-category="all">
+                        جميع الأدوات
+                    </button>
+
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="study">
+                        الدراسة
+                    </button>
+
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="math">
+                        الحساب والتحويل
+                    </button>
+
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="text">
+                        النصوص
+                    </button>
+
+                </div>
+
+                <div class="tools-container" id="toolsContainer">
+
+                    <!-- حاسبة المعدل -->
+
+                    <article
+                        class="tool-card"
+                        data-category="study"
+                        data-search="حاسبة المعدل الدراسي النقاط النقط المعاملات">
+
+                        <span class="tool-icon">🧮</span>
+
+                        <h3>حاسبة المعدل</h3>
+
+                        <p>
+                            حسب المعدل الدراسي ديالك باستعمال النقط
+                            والمعاملات.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            data-open-tool="average">
+                            افتح الحاسبة
+                        </button>
+
+                    </article>
+
+
+                    <!-- تحويل الوحدات -->
+
+                    <article
+                        class="tool-card"
+                        data-category="math"
+                        data-search="تحويل الوحدات الطول الوزن الوقت كيلومتر متر كيلوغرام">
+
+                        <span class="tool-icon">📏</span>
+
+                        <h3>تحويل الوحدات</h3>
+
+                        <p>
+                            حول وحدات الطول والوزن والوقت بسهولة.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            data-open-tool="convert">
+                            افتح المحول
+                        </button>
+
+                    </article>
+
+
+                    <!-- عداد الكلمات -->
+
+                    <article
+                        class="tool-card"
+                        data-category="text"
+                        data-search="عداد الكلمات الحروف النص الكتابة">
+
+                        <span class="tool-icon">📝</span>
+
+                        <h3>عداد الكلمات</h3>
+
+                        <p>
+                            حسب عدد الكلمات والحروف والمسافات في النص.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            data-open-tool="counter">
+                            افتح العداد
+                        </button>
+
+                    </article>
+
+
+                    <!-- حاسبة النسبة المئوية -->
+
+                    <article
+                        class="tool-card"
+                        data-category="math"
+                        data-search="النسبة المئوية pourcentage حساب النسبة">
+
+                        <span class="tool-icon">％</span>
+
+                        <h3>حاسبة النسبة المئوية</h3>
+
+                        <p>
+                            احسب نسبة مئوية من أي عدد.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            data-open-tool="percentage">
+                            افتح الحاسبة
+                        </button>
+
+                    </article>
+
+
+                    <!-- حاسبة الجمع والطرح -->
+
+                    <article
+                        class="tool-card"
+                        data-category="math"
+                        data-search="الحساب الجمع الطرح الضرب القسمة حاسبة">
+
+                        <span class="tool-icon">➗</span>
+
+                        <h3>الحاسبة البسيطة</h3>
+
+                        <p>
+                            نفذ عمليات الجمع والطرح والضرب والقسمة.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            data-open-tool="calculator">
+                            افتح الحاسبة
+                        </button>
+
+                    </article>
+
+
+                    <!-- تنظيف النص -->
+
+                    <article
+                        class="tool-card"
+                        data-category="text"
+                        data-search="تنظيف النص إزالة المسافات الزائدة ترتيب الكتابة">
+
+                        <span class="tool-icon">🧹</span>
+
+                        <h3>منظف النصوص</h3>
+
+                        <p>
+                            حذف المسافات الزائدة وتنظيم النصوص بسرعة.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            data-open-tool="cleaner">
+                            افتح الأداة
+                        </button>
+
+                    </article>
+
+                </div>
+
+                <p id="noResults" class="empty-search hidden">
+                    ما لقينا حتى أداة بهاد الاسم. جرب كلمة أخرى.
+                </p>
+
+
+                <!-- =========================
+                     مساحة تشغيل الأدوات
+                ========================== -->
+
+                <div class="working-area" id="workingArea">
+
+                    <!-- حاسبة المعدل -->
+
+                    <section
+                        class="tool-panel hidden"
+                        id="panel-average"
+                        aria-labelledby="averageTitle">
+
+                        <h3 id="averageTitle">🧮 حاسبة المعدل الدراسي</h3>
+
+                        <p class="tool-description">
+                            دخل النقطة والمعامل ديال كل مادة. النقط خاصها
+                            تكون بين 0 و20، والمعامل أكبر من صفر.
+                        </p>
+
+                        <div id="gradesContainer">
+
+                            <div class="grade-row">
+                                <div class="form-group">
+                                    <label>النقطة الأولى</label>
+                                    <input
+                                        class="form-control grade-mark"
+                                        type="number"
+                                        min="0"
+                                        max="20"
+                                        step="0.01"
+                                        placeholder="مثلاً 16">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>المعامل</label>
+                                    <input
+                                        class="form-control grade-coefficient"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        placeholder="مثلاً 2">
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="remove-grade"
+                                    aria-label="حذف المادة">
+                                    حذف
+                                </button>
+                            </div>
+
+                            <div class="grade-row">
+                                <div class="form-group">
+                                    <label>النقطة الثانية</label>
+                                    <input
+                                        class="form-control grade-mark"
+                                        type="number"
+                                        min="0"
+                                        max="20"
+                                        step="0.01"
+                                        placeholder="مثلاً 14">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>المعامل</label>
+                                    <input
+                                        class="form-control grade-coefficient"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        placeholder="مثلاً 3">
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="remove-grade"
+                                    aria-label="حذف المادة">
+                                    حذف
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="button-row">
+
+                            <button
+                                type="button"
+                                class="button button-secondary"
+                                id="addGrade">
+                                + زيد مادة
+                            </button>
+
+                            <button
+                                type="button"
+                                class="button button-primary"
+                                id="calculateAverage">
+                                احسب المعدل
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="averageResult"
+                            class="result hidden"
+                            aria-live="polite">
+                        </div>
+
+                    </section>
+
+
+                    <!-- محول الوحدات -->
+
+                    <section
+                        class="tool-panel hidden"
+                        id="panel-convert"
+                        aria-labelledby="convertTitle">
+
+                        <h3 id="convertTitle">📏 تحويل الوحدات</h3>
+
+                        <p class="tool-description">
+                            اختار نوع الوحدة، ودخل القيمة، ثم اختار
+                            الوحدة الأصلية والوحدة المطلوبة.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="unitCategory">نوع التحويل</label>
+
+                            <select id="unitCategory" class="form-control">
+                                <option value="length">الطول</option>
+                                <option value="weight">الوزن</option>
+                                <option value="time">الوقت</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unitValue">القيمة</label>
+
+                            <input
+                                id="unitValue"
+                                class="form-control"
+                                type="number"
+                                step="any"
+                                placeholder="دخل القيمة هنا">
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label for="unitFrom">من</label>
+
+                                <select
+                                    id="unitFrom"
+                                    class="form-control">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="unitTo">إلى</label>
+
+                                <select
+                                    id="unitTo"
+                                    class="form-control">
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="button button-primary"
+                            id="convertButton">
+                            حول القيمة
+                        </button>
+
+                        <div
+                            id="convertResult"
+                            class="result hidden"
+                            aria-live="polite">
+                        </div>
+
+                    </section>
+
+
+                    <!-- عداد الكلمات -->
+
+                    <section
+                        class="tool-panel hidden"
+                        id="panel-counter"
+                        aria-labelledby="counterTitle">
+
+                        <h3 id="counterTitle">📝 عداد الكلمات والحروف</h3>
+
+                        <p class="tool-description">
+                            كتب النص ديالك أو لسقو هنا باش تعرف عدد
+                            الكلمات والحروف والمسافات.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="counterText">النص ديالك</label>
+
+                            <textarea
+                                id="counterText"
+                                class="form-control"
+                                placeholder="كتب أو لسق النص هنا..."></textarea>
+                        </div>
+
+                        <div class="stats">
+
+                            <div class="stat-card">
+                                <strong id="wordCount">0</strong>
+                                <span>الكلمات</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <strong id="characterCount">0</strong>
+                                <span>الحروف مع المسافات</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <strong id="characterNoSpaces">0</strong>
+                                <span>الحروف بلا مسافات</span>
+                            </div>
+
+                        </div>
+
+                        <div class="button-row">
+
+                            <button
+                                type="button"
+                                class="button button-secondary"
+                                id="copyText">
+                                نسخ النص
+                            </button>
+
+                            <button
+                                type="button"
+                                class="button button-secondary"
+                                id="clearText">
+                                مسح النص
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="counterMessage"
+                            class="result hidden"
+                            aria-live="polite">
+                        </div>
+
+                    </section>
+
+
+                    <!-- حاسبة النسبة المئوية -->
+
+                    <section
+                        class="tool-panel hidden"
+                        id="panel-percentage"
+                        aria-labelledby="percentageTitle">
+
+                        <h3 id="percentageTitle">％ حاسبة النسبة المئوية</h3>
+
+                        <p class="tool-description">
+                            مثال: شحال هي 20% من 150؟
+                        </p>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label for="percentageValue">
+                                    النسبة المئوية
+                                </label>
+
+                                <input
+                                    id="percentageValue"
+                                    class="form-control"
+                                    type="number"
+                                    step="any"
+                                    placeholder="مثلاً 20">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="percentageNumber">
+                                    العدد
+                                </label>
+
+                                <input
+                                    id="percentageNumber"
+                                    class="form-control"
+                                    type="number"
+                                    step="any"
+                                    placeholder="مثلاً 150">
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="button button-primary"
+                            id="calculatePercentage">
+                            احسب النسبة
+                        </button>
+
+                        <div
+                            id="percentageResult"
+                            class="result hidden"
+                            aria-live="polite">
+                        </div>
+
+                    </section>
+
+
+                    <!-- الحاسبة البسيطة -->
+
+                    <section
+                        class="tool-panel hidden"
+                        id="panel-calculator"
+                        aria-labelledby="calculatorTitle">
+
+                        <h3 id="calculatorTitle">➗ الحاسبة البسيطة</h3>
+
+                        <p class="tool-description">
+                            دخل جوج أعداد واختار العملية الحسابية.
+                        </p>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label for="numberOne">العدد الأول</label>
+
+                                <input
+                                    id="numberOne"
+                                    class="form-control"
+                                    type="number"
+                                    step="any"
+                                    placeholder="العدد الأول">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="numberTwo">العدد الثاني</label>
+
+                                <input
+                                    id="numberTwo"
+                                    class="form-control"
+                                    type="number"
+                                    step="any"
+                                    placeholder="العدد الثاني">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="operation">العملية</label>
+
+                            <select id="operation" class="form-control">
+                                <option value="add">الجمع (+)</option>
+                                <option value="subtract">الطرح (-)</option>
+                                <option value="multiply">الضرب (×)</option>
+                                <option value="divide">القسمة (÷)</option>
+                            </select>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="button button-primary"
+                            id="calculateSimple">
+                            احسب
+                        </button>
+
+                        <div
+                            id="calculatorResult"
+                            class="result hidden"
+                            aria-live="polite">
+                        </div>
+
+                    </section>
+
+
+                    <!-- منظف النصوص -->
+
+                    <section
+                        class="tool-panel hidden"
+                        id="panel-cleaner"
+                        aria-labelledby="cleanerTitle">
+
+                        <h3 id="cleanerTitle">🧹 منظف النصوص</h3>
+
+                        <p class="tool-description">
+                            هاد الأداة كتحيد المسافات الزائدة من النص
+                            وكتنظم الأسطر.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="dirtyText">النص الأصلي</label>
+
+                            <textarea
+                                id="dirtyText"
+                                class="form-control"
+                                placeholder="لسق النص اللي بغيتي تنظمو..."></textarea>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="button button-primary"
+                            id="cleanTextButton">
+                            نظف النص
+                        </button>
+
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label for="cleanedText">النص بعد التنظيف</label>
+
+                            <textarea
+                                id="cleanedText"
+                                class="form-control"
+                                readonly
+                                placeholder="النتيجة غادي تظهر هنا..."></textarea>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="button button-secondary"
+                            id="copyCleanedText">
+                            نسخ النتيجة
+                        </button>
+
+                        <div
+                            id="cleanerMessage"
+                            class="result hidden"
+                            aria-live="polite">
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========================
+             مميزات الموقع
+        ========================== -->
+
+        <section class="section" id="features">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>علاش تستعمل <span class="accent">KHA Tools</span>؟</h2>
+                    <p>هدفنا هو نخليو الأدوات اليومية بسيطة وسهلة.</p>
+                </div>
+
+                <div class="features-grid">
+
+                    <article class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>سريع وبسيط</h3>
+                        <p>
+                            الواجهة خفيفة ومصممة باش توصل للأداة
+                            اللي محتاج بلا خطوات كثيرة.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>متوافق مع الهاتف</h3>
+                        <p>
+                            التصميم كيتكيف مع الشاشات الصغيرة
+                            والحواسيب.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">🆓</div>
+                        <h3>استعمال مجاني</h3>
+                        <p>
+                            الأدوات المتوفرة هنا مجانية للاستعمال
+                            بدون تثبيت برامج إضافية.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>معالجة محلية</h3>
+                        <p>
+                            العمليات الموجودة في هذه النسخة كتتم
+                            داخل المتصفح، وما كتحتاجش إرسال النصوص
+                            إلى خادم خارجي.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>مفيد للدراسة</h3>
+                        <p>
+                            أدوات بسيطة لمساعدة التلاميذ في الحساب
+                            وتنظيم النصوص.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>قابل للتطوير</h3>
+                        <p>
+                            يمكن إضافة أدوات جديدة وتحسين الموقع
+                            مع الوقت حسب حاجيات الزوار.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========================
+             حول الموقع
+        ========================== -->
+
+        <section class="section" id="about">
+            <div class="container">
+
+                <div class="about-box">
+
+                    <h2>حول <span class="accent">KHA Tools</span></h2>
+
+                    <p>
+                        KHA Tools مشروع يهدف إلى جمع أدوات رقمية بسيطة
+                        في مكان واحد، حتى يسهل على التلاميذ والطلاب
+                        والمستخدمين إنجاز بعض المهام اليومية.
+                    </p>
+
+                    <p>
+                        نعمل على تطوير أدوات جديدة وتحسين تجربة الاستعمال
+                        باستمرار. بعض الأدوات قد تحتاج إلى تحديثات أو
+                        اختبارات إضافية قبل اعتمادها في الاستعمال المهم.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========================
+             الأسئلة الشائعة
+        ========================== -->
+
+        <section class="section" id="faq">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>الأسئلة الشائعة</h2>
+                    <p>أجوبة على بعض الأسئلة حول الموقع.</p>
+                </div>
+
+                <div class="faq-list">
+
+                    <details class="faq-item">
+                        <summary>واش KHA Tools مجاني؟</summary>
+                        <p>
+                            نعم، الأدوات الموجودة في هذه النسخة يمكن
+                            استعمالها مجاناً.
+                        </p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>واش خاصني نحمل شي برنامج؟</summary>
+                        <p>
+                            لا، تقدر تستعمل الموقع من متصفح حديث
+                            على الهاتف أو الحاسوب.
+                        </p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>واش الموقع كيخدم فالهاتف؟</summary>
+                        <p>
+                            نعم، التصميم متجاوب مع الهواتف والأجهزة
+                            ذات الشاشات الصغيرة.
+                        </p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>كيفاش نحسب المعدل الدراسي؟</summary>
+                        <p>
+                            دخل النقطة والمعامل ديال كل مادة، ثم اضغط
+                            على زر حساب المعدل. النتيجة تعتمد على
+                            المعاملات اللي دخلتي.
+                        </p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>واش نقدر نقترح أداة جديدة؟</summary>
+                        <p>
+                            يمكن إضافة وسيلة للتواصل أو نموذج اقتراحات
+                            في المستقبل. هاد النسخة ما زال ما فيهاش
+                            إرسال فعلي للاقتراحات إلى صاحب الموقع.
+                        </p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>واش الموقع فيه إعلانات؟</summary>
+                        <p>
+                            هاد النسخة ما فيها حتى نظام إعلانات مدمج.
+                            إضافة الإعلانات كتحتاج إعداد خدمة مناسبة
+                            واحترام شروطها قبل عرضها.
+                        </p>
+                    </details>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========================
+             التواصل
+        ========================== -->
+
+        <section class="section" id="contact">
+            <div class="container">
+
+                <div class="contact-box">
+
+                    <div class="section-heading">
+                        <h2>تواصل معنا</h2>
+                        <p>
+                            عندك اقتراح لتحسين الموقع؟ مرحباً بأفكارك.
+                        </p>
+                    </div>
+
+                    <p>
+                        تقدر تراسل صاحب الموقع عبر البريد الإلكتروني
+                        إذا أضفت عنواناً حقيقياً هنا.
+                    </p>
+
+                    <p>
+                        ملاحظة: ما تضفش عنوان بريد وهمي. خاص رابط التواصل
+                        يتربط بوسيلة حقيقية قبل نشر الموقع.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         تذييل الموقع
+    ========================== -->
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+
+            <a href="#home" class="logo">
+                KHA <span>Tools</span>
+            </a>
+
+            <p>
+                © <span id="currentYear">2026</span>
+                KHA Tools. جميع الحقوق محفوظة.
+            </p>
+
+            <div class="footer-links">
+                <a href="#home">الرئيسية</a>
+                <a href="#tools">الأدوات</a>
+                <a href="#about">حول الموقع</a>
+                <a href="#contact">التواصل</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <button
+        type="button"
+        id="backToTop"
+        class="back-to-top"
+        aria-label="العودة إلى أعلى الصفحة">
+        ↑
+    </button>
+
+
+    <!-- =========================
+         JavaScript: وظائف الأدوات
+    ========================== -->
+
+    <script>
+        "use strict";
+
+        // عناصر الصفحة
+        const toolSearch = document.getElementById("toolSearch");
+        const toolCards = document.querySelectorAll(".tool-card");
+        const categoryButtons = document.querySelectorAll(".category-button");
+        const noResults = document.getElementById("noResults");
+        const toolPanels = document.querySelectorAll(".tool-panel");
+
+        let activeCategory = "all";
+
+
+        // =========================
+        // البحث والتصنيفات
+        // =========================
+
+        function filterTools() {
+            const searchTerm = toolSearch.value
+                .trim()
+                .toLowerCase();
+
+            let visibleCount = 0;
+
+            toolCards.forEach(function (card) {
+                const title = card.querySelector("h3").textContent.toLowerCase();
+                const description = card.querySelector("p").textContent.toLowerCase();
+                const keywords = (card.dataset.search || "").toLowerCase();
+                const category = card.dataset.category;
+
+                const matchesSearch =
+                    title.includes(searchTerm) ||
+                    description.includes(searchTerm) ||
+                    keywords.includes(searchTerm);
+
+                const matchesCategory =
+                    activeCategory === "all" ||
+                    category === activeCategory;
+
+                const visible = matchesSearch && matchesCategory;
+
+                card.classList.toggle("hidden", !visible);
+
+                if (visible) {
+                    visibleCount++;
+                }
+            });
+
+            noResults.classList.toggle("hidden", visibleCount !== 0);
+        }
+
+        toolSearch.addEventListener("input", filterTools);
+
+        categoryButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                categoryButtons.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+
+                button.classList.add("active");
+                activeCategory = button.dataset.category;
+
+                filterTools();
+            });
+        });
+
+
+        // =========================
+        // فتح الأدوات وإغلاقها
+        // =========================
+
+        function openTool(toolName) {
+            toolPanels.forEach(function (panel) {
+                panel.classList.add("hidden");
+            });
+
+            const selectedPanel = document.getElementById(
+                "panel-" + toolName
+            );
+
+            if (!selectedPanel) {
+                return;
+            }
+
+            selectedPanel.classList.remove("hidden");
+
+            document.getElementById("workingArea").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        document.querySelectorAll("[data-open-tool]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                openTool(button.dataset.openTool);
+            });
+        });
+
+
+        // =========================
+        // رسائل النتائج
+        // =========================
+
+        function showResult(element, message, isError = false) {
+            element.textContent = message;
+            element.classList.remove("hidden", "error");
+
+            if (isError) {
+                element.classList.add("error");
+            }
+        }
+
+        function hideResult(element) {
+            element.textContent = "";
+            element.classList.add("hidden");
+            element.classList.remove("error");
+        }
+
+        function formatNumber(number) {
+            return new Intl.NumberFormat("ar", {
+                maximumFractionDigits: 6
+            }).format(number);
+        }
+
+
+        // =========================
+        // حاسبة المعدل
+        // =========================
+
+        const gradesContainer = document.getElementById("gradesContainer");
+        const averageResult = document.getElementById("averageResult");
+
+        function addGradeRow() {
+            const row = document.createElement("div");
+            row.className = "grade-row";
+
+            const markGroup = document.createElement("div");
+            markGroup.className = "form-group";
+
+            const markLabel = document.createElement("label");
+            markLabel.textContent = "النقطة";
+
+            const markInput = document.createElement("input");
+            markInput.className = "form-control grade-mark";
+            markInput.type = "number";
+            markInput.min = "0";
+            markInput.max = "20";
+            markInput.step = "0.01";
+            markInput.placeholder = "مثلاً 15";
+
+            markGroup.append(markLabel, markInput);
+
+            const coefficientGroup = document.createElement("div");
+            coefficientGroup.className = "form-group";
+
+            const coefficientLabel = document.createElement("label");
+            coefficientLabel.textContent = "المعامل";
+
+            const coefficientInput = document.createElement("input");
+            coefficientInput.className = "form-control grade-coefficient";
+            coefficientInput.type = "number";
+            coefficientInput.min = "0.01";
+            coefficientInput.step = "0.01";
+            coefficientInput.placeholder = "مثلاً 2";
+
+            coefficientGroup.append(
+                coefficientLabel,
+                coefficientInput
+            );
+
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "remove-grade";
+            removeButton.textContent = "حذف";
+            removeButton.setAttribute("aria-label", "حذف المادة");
+
+            row.append(markGroup, coefficientGroup, removeButton);
+            gradesContainer.appendChild(row);
+        }
+
+        document.getElementById("addGrade").addEventListener("click", function () {
+            addGradeRow();
+            hideResult(averageResult);
+        });
+
+        gradesContainer.addEventListener("click", function (event) {
+            const button = event.target.closest(".remove-grade");
+
+            if (!button) {
+                return;
+            }
+
+            const rows = gradesContainer.querySelectorAll(".grade-row");
+
+            if (rows.length <= 1) {
+                showResult(
+                    averageResult,
+                    "خاصك تخلي مادة واحدة على الأقل.",
+                    true
+                );
+                return;
+            }
+
+            button.closest(".grade-row").remove();
+            hideResult(averageResult);
+        });
+
+        document.getElementById("calculateAverage").addEventListener(
+            "click",
+            function () {
+                const rows = gradesContainer.querySelectorAll(".grade-row");
+
+                let weightedTotal = 0;
+                let totalCoefficients = 0;
+
+                for (const row of rows) {
+                    const markInput = row.querySelector(".grade-mark");
+                    const coefficientInput = row.querySelector(
+                        ".grade-coefficient"
+                    );
+
+                    const markText = markInput.value.trim();
+                    const coefficientText = coefficientInput.value.trim();
+
+                    if (markText === "" || coefficientText === "") {
+                        showResult(
+                            averageResult,
+                            "عمر النقطة والمعامل ديال كل مادة.",
+                            true
+                        );
+                        return;
+                    }
+
+                    const mark = Number(markText);
+                    const coefficient = Number(coefficientText);
+
+                    if (
+                        !Number.isFinite(mark) ||
+                        !Number.isFinite(coefficient) ||
+                        mark < 0 ||
+                        mark > 20 ||
+                        coefficient <= 0
+                    ) {
+                        showResult(
+                            averageResult,
+                            "دخل نقطاً بين 0 و20 ومعاملات أكبر من صفر.",
+                            true
+                        );
+                        return;
+                    }
+
+                    weightedTotal += mark * coefficient;
+                    totalCoefficients += coefficient;
+                }
+
+                if (totalCoefficients === 0) {
+                    showResult(
+                        averageResult,
+                        "ما يمكنش حساب المعدل بهاد المعطيات.",
+                        true
+                    );
+                    return;
+                }
+
+                const average = weightedTotal / totalCoefficients;
+
+                showResult(
+                    averageResult,
+                    "المعدل ديالك هو: " + formatNumber(average) + " / 20"
+                );
+            }
+        );
+
+
+        // =========================
+        // تحويل الوحدات
+        // =========================
+
+        const unitDefinitions = {
+            length: {
+                label: "الطول",
+                units: {
+                    mm: { label: "ميليمتر (mm)", factor: 0.001 },
+                    cm: { label: "سنتيمتر (cm)", factor: 0.01 },
+                    m: { label: "متر (m)", factor: 1 },
+                    km: { label: "كيلومتر (km)", factor: 1000 }
+                }
+            },
+
+            weight: {
+                label: "الوزن",
+                units: {
+                    mg: { label: "ميليغرام (mg)", factor: 0.000001 },
+                    g: { label: "غرام (g)", factor: 0.001 },
+                    kg: { label: "كيلوغرام (kg)", factor: 1 },
+                    t: { label: "طن (t)", factor: 1000 }
+                }
+            },
+
+            time: {
+                label: "الوقت",
+                units: {
+                    s: { label: "ثانية", factor: 1 },
+                    min: { label: "دقيقة", factor: 60 },
+                    h: { label: "ساعة", factor: 3600 },
+                    day: { label: "يوم", factor: 86400 }
+                }
+            }
+        };
+
+        const unitCategory = document.getElementById("unitCategory");
+        const unitFrom = document.getElementById("unitFrom");
+        const unitTo = document.getElementById("unitTo");
+        const convertResult = document.getElementById("convertResult");
+
+        function populateUnits() {
+            const category = unitDefinitions[unitCategory.value];
+            const oldFrom = unitFrom.value;
+            const oldTo = unitTo.value;
+
+            unitFrom.replaceChildren();
+            unitTo.replaceChildren();
+
+            Object.entries(category.units).forEach(function ([key, unit]) {
+                const optionFrom = document.createElement("option");
+                optionFrom.value = key;
+                optionFrom.textContent = unit.label;
+
+                const optionTo = document.createElement("option");
+                optionTo.value = key;
+                optionTo.textContent = unit.label;
+
+                unitFrom.appendChild(optionFrom);
+                unitTo.appendChild(optionTo);
+            });
+
+            if (category.units[oldFrom]) {
+                unitFrom.value = oldFrom;
+            }
+
+            if (category.units[oldTo]) {
+                unitTo.value = oldTo;
+            } else if (unitTo.options.length > 1) {
+                unitTo.selectedIndex = 1;
+            }
+
+            hideResult(convertResult);
+        }
+
+        unitCategory.addEventListener("change", populateUnits);
+
+        populateUnits();
+
+        document.getElementById("convertButton").addEventListener(
+            "click",
+            function () {
+                const valueText = document.getElementById("unitValue").value.trim();
+
+                if (valueText === "") {
+                    showResult(
+                        convertResult,
+                        "دخل القيمة اللي بغيتي تحول.",
+                        true
+                    );
+                    return;
+                }
+
+                const value = Number(valueText);
+
+                if (!Number.isFinite(value)) {
+                    showResult(
+                        convertResult,
+                        "دخل قيمة رقمية صحيحة.",
+                        true
+                    );
+                    return;
+                }
+
+                const category = unitDefinitions[unitCategory.value];
+                const fromUnit = category.units[unitFrom.value];
+                const toUnit = category.units[unitTo.value];
+
+                const converted = value * fromUnit.factor / toUnit.factor;
+
+                showResult(
+                    convertResult,
+                    formatNumber(value) + " " + fromUnit.label +
+                    " = " + formatNumber(converted) + " " + toUnit.label
+                );
+            }
+        );
+
+
+        // =========================
+        // عداد الكلمات والحروف
+        // =========================
+
+        const counterText = document.getElementById("counterText");
+        const wordCount = document.getElementById("wordCount");
+        const characterCount = document.getElementById("characterCount");
+        const characterNoSpaces = document.getElementById("characterNoSpaces");
+        const counterMessage = document.getElementById("counterMessage");
+
+        function updateCounter() {
+            const text = counterText.value;
+
+            const trimmed = text.trim();
+
+            const words = trimmed
+                ? trimmed.split(/\s+/u).length
+                : 0;
+
+            wordCount.textContent = formatNumber(words);
+            characterCount.textContent = formatNumber(text.length);
+            characterNoSpaces.textContent = formatNumber(
+                text.replace(/\s/gu, "").length
+            );
+
+            hideResult(counterMessage);
+        }
+
+        counterText.addEventListener("input", updateCounter);
+
+        document.getElementById("clearText").addEventListener(
+            "click",
+            function () {
+                counterText.value = "";
+                updateCounter();
+                counterText.focus();
+            }
+        );
+
+        document.getElementById("copyText").addEventListener(
+            "click",
+            async function () {
+                if (!counterText.value) {
+                    showResult(
+                        counterMessage,
+                        "ما كاين حتى نص باش تنسخو.",
+                        true
+                    );
+                    return;
+                }
+
+                try {
+                    await navigator.clipboard.writeText(counterText.value);
+
+                    showResult(
+                        counterMessage,
+                        "تم نسخ النص."
+                    );
+                } catch (error) {
+                    counterText.focus();
+                    counterText.select();
+
+                    showResult(
+                        counterMessage,
+                        "حدد النص ثم استعمل Ctrl + C للنسخ."
+                    );
+                }
+            }
+        );
+
+
+        // =========================
+        // حاسبة النسبة المئوية
+        // =========================
+
+        const percentageResult = document.getElementById("percentageResult");
+
+        document.getElementById("calculatePercentage").addEventListener(
+            "click",
+            function () {
+                const percentageText = document.getElementById(
+                    "percentageValue"
+                ).value.trim();
+
+                const numberText = document.getElementById(
+                    "percentageNumber"
+                ).value.trim();
+
+                if (percentageText === "" || numberText === "") {
+                    showResult(
+                        percentageResult,
+                        "عمر النسبة والعدد أولاً.",
+                        true
+                    );
+                    return;
+                }
+
+                const percentage = Number(percentageText);
+                const number = Number(numberText);
+
+                if (
+                    !Number.isFinite(percentage) ||
+                    !Number.isFinite(number)
+                ) {
+                    showResult(
+                        percentageResult,
+                        "دخل أرقاماً صحيحة.",
+                        true
+                    );
+                    return;
+                }
+
+                const result = percentage / 100 * number;
+
+                showResult(
+                    percentageResult,
+                    formatNumber(percentage) + "% من " +
+                    formatNumber(number) + " تساوي " +
+                    formatNumber(result)
+                );
+            }
+        );
+
+
+        // =========================
+        // الحاسبة البسيطة
+        // =========================
+
+        const calculatorResult = document.getElementById("calculatorResult");
+
+        document.getElementById("calculateSimple").addEventListener(
+            "click",
+            function () {
+                const firstText = document.getElementById("numberOne").value.trim();
+                const secondText = document.getElementById("numberTwo").value.trim();
+                const operation = document.getElementById("operation").value;
+
+                if (firstText === "" || secondText === "") {
+                    showResult(
+                        calculatorResult,
+                        "دخل العددين أولاً.",
+                        true
+                    );
+                    return;
+                }
+
+                const first = Number(firstText);
+                const second = Number(secondText);
+
+                if (
+                    !Number.isFinite(first) ||
+                    !Number.isFinite(second)
+                ) {
+                    showResult(
+                        calculatorResult,
+                        "دخل أرقاماً صحيحة.",
+                        true
+                    );
+                    return;
+                }
+
+                let result;
+
+                switch (operation) {
+                    case "add":
+                        result = first + second;
+                        break;
+
+                    case "subtract":
+                        result = first - second;
+                        break;
+
+                    case "multiply":
+                        result = first * second;
+                        break;
+
+                    case "divide":
+                        if (second === 0) {
+                            showResult(
+                                calculatorResult,
+                                "ما يمكنش القسمة على صفر.",
+                                true
+                            );
+                            return;
+                        }
+
+                        result = first / second;
+                        break;
+
+                    default:
+                        showResult(
+                            calculatorResult,
+                            "اختار عملية حسابية صحيحة.",
+                            true
+                        );
+                        return;
+                }
+
+                showResult(
+                    calculatorResult,
+                    "النتيجة: " + formatNumber(result)
+                );
+            }
+        );
+
+
+        // =========================
+        // منظف النصوص
+        // =========================
+
+        const dirtyText = document.getElementById("dirtyText");
+        const cleanedText = document.getElementById("cleanedText");
+        const cleanerMessage = document.getElementById("cleanerMessage");
+
+        document.getElementById("cleanTextButton").addEventListener(
+            "click",
+            function () {
+                const original = dirtyText.value;
+
+                const cleaned = original
+                    .split(/\r?\n/u)
+                    .map(function (line) {
+                        return line.replace(/\s+/gu, " ").trim();
+                    })
+                    .filter(function (line) {
+                        return line.length > 0;
+                    })
+                    .join("\n");
+
+                cleanedText.value = cleaned;
+
+                if (!original.trim()) {
+                    showResult(
+                        cleanerMessage,
+                        "دخل النص اللي بغيتي تنظمو.",
+                        true
+                    );
+                    return;
+                }
+
+                showResult(
+                    cleanerMessage,
+                    "تم تنظيم النص. راجع النتيجة قبل نسخها."
+                );
+            }
+        );
+
+        document.getElementById("copyCleanedText").addEventListener(
+            "click",
+            async function () {
+                if (!cleanedText.value) {
+                    showResult(
+                        cleanerMessage,
+                        "نظم النص أولاً قبل النسخ.",
+                        true
+                    );
+                    return;
+                }
+
+                try {
+                    await navigator.clipboard.writeText(cleanedText.value);
+
+                    showResult(
+                        cleanerMessage,
+                        "تم نسخ النص المنظم."
+                    );
+                } catch (error) {
+                    cleanedText.focus();
+                    cleanedText.select();
+
+                    showResult(
+                        cleanerMessage,
+                        "حدد النتيجة ثم استعمل Ctrl + C للنسخ."
+                    );
+                }
+            }
+        );
+
+
+        // =========================
+        // العودة إلى أعلى الصفحة
+        // =========================
+
+        document.getElementById("backToTop").addEventListener(
+            "click",
+            function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        );
+
+
+        // =========================
+        // السنة الحالية
+        // =========================
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+
+        // تشغيل العداد عند فتح الصفحة
+        updateCounter();
+
+        console.log("KHA Tools: الموقع جاهز للاستعمال.");
+    </script>
+
+</body>
+</html>
