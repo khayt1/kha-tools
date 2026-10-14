@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://khayt1.github.io/kha-tools/sitemap.xml
